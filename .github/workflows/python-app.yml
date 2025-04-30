@@ -15,8 +15,6 @@ permissions:
 jobs:
   build:
     
-    env:
-      AWS_DEFAULT_REGION: us-west-1
     environment: aws
     runs-on: ubuntu-latest
 
