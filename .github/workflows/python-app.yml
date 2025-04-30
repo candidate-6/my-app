@@ -29,4 +29,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Build Docker Image
       run: |
-        docker build -t python:3.11-slim .
+        docker build -t counter-service:latest .
