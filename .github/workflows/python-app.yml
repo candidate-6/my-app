@@ -56,8 +56,9 @@ jobs:
     - name: Install kubectl
       run: |
         KUBE_VERSION=$(curl -s https://dl.k8s.io/release/stable.txt)
-        echo "The version is $KUBE_VERSION"
-        curl -LO "https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl"
+        DOWNLOAD_URL="https://dl.k8s.io/release/${KUBE_VERSION}/bin/linux/amd64/kubectl"
+        echo "Downloading kubectl from: $DOWNLOAD_URL"
+        curl -L -o kubectl "$DOWNLOAD_URL"
         chmod +x kubectl
         sudo mv kubectl /usr/local/bin/
 
