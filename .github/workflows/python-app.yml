@@ -35,7 +35,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-west-1
+        aws-region: ${{ secrets.AWS_REGION }}
     
     - name: Log in to Amazon ECR
       uses: aws-actions/amazon-ecr-login@v1
@@ -52,3 +52,24 @@ jobs:
         docker tag $ECR_REPOSITORY:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
         # Push to ECR
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+    - name: Install kubectl
+      run: |
+        curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+        chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/
+
+    - name: Install AWS IAM Authenticator
+      run: |
+        curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.24.9/2023-03-17/bin/linux/amd64/aws-iam-authenticator
+        chmod +x ./aws-iam-authenticator
+        sudo mv aws-iam-authenticator /usr/local/bin/
+
+    - name: Update kubeconfig
+      run: |
+        aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+    - name: Deploy to EKS
+      run: |
+        kubectl set image deployment/counter-service-deployment counter-service-container=424579921836.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/counter-service:latest
+        kubectl rollout status deployment/counter-service-deployment
