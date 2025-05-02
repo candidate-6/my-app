@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 
 # Expose the port used by the app (adjust if needed)
-EXPOSE 443
+EXPOSE 8443
 
 # Run the application
 CMD ["python", "counter-service.py"]
