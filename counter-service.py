@@ -16,4 +16,4 @@ def index():
         return str(f"POST requests: {post_counter}, GET requests: {get_counter}")
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8443, host='0.0.0.0')
+    app.run(debug=True, port=443, host='0.0.0.0')
