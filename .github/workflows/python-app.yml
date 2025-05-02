@@ -109,6 +109,10 @@ jobs:
                 image: 424579921836.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/counter-service:latest
                 ports:
                 - containerPort: 443
+                securityContext:
+                  runAsUser: 1000
+                  runAsGroup: 1000
+                  runAsNonRoot: true
         EOF
         kubectl apply -f counter-service-deployment.yaml
 
