@@ -82,8 +82,8 @@ jobs:
             app: counter-service
           ports:
             - protocol: TCP
-              port: 8443
-              targetPort: 443
+              port: 443
+              targetPort: 8443
               nodePort: 30443
         EOF
         kubectl apply -f counter-service-service.yaml 
@@ -108,7 +108,7 @@ jobs:
               - name: counter-service-container
                 image: 424579921836.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/counter-service:latest
                 ports:
-                - containerPort: 443
+                - containerPort: 8443
                 securityContext:
                   runAsUser: 1000
                   runAsGroup: 1000
