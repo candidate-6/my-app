@@ -39,4 +39,3 @@ EXPOSE 443
 
 # Run the application as non-root
 CMD ["python", "counter-service.py"]
-```
