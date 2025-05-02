@@ -77,7 +77,7 @@ jobs:
         metadata:
           name: counter-service
         spec:
-          type: NodePort
+          type: LoadBalancer
           selector:
             app: counter-service
           ports:
@@ -85,7 +85,8 @@ jobs:
               port: 443
               targetPort: 8443
         EOF
-        kubectl apply -f counter-service-service.yaml 
+        kubectl apply -f counter-service-service.yaml
+        
     - name: Deploy K8s resources
       run: |
         cat <<EOF > counter-service-deployment.yaml
