@@ -105,7 +105,7 @@ jobs:
                 app: counter-service
             spec:
               nodeSelector:
-                eks.amazonaws.com/nodegroup: private-nodes
+                eks.amazonaws.com/nodegroup: node-group-2-20250502181736044800000018
               containers:
               - name: counter-service-container
                 image: 424579921836.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/counter-service:latest
