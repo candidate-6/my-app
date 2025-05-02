@@ -84,7 +84,6 @@ jobs:
             - protocol: TCP
               port: 443
               targetPort: 8443
-              nodePort: 30443
         EOF
         kubectl apply -f counter-service-service.yaml 
     - name: Deploy K8s resources
