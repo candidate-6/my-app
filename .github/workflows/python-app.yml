@@ -68,9 +68,10 @@ jobs:
     - name: Update kubeconfig
       run: |
         aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+        
     - name: Create K8s Service
       run: |
-        cat <<EOF > ounter-service-service.yaml
+        cat <<EOF > counter-service-service.yaml
         apiVersion: v1
         kind: Service
         metadata:
