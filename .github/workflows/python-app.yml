@@ -114,8 +114,8 @@ jobs:
                   runAsGroup: 1000
                   runAsNonRoot: true
                   capabilities:
-                  add:
-                    - NET_BIND_SERVICE
+                    add:
+                      - NET_BIND_SERVICE
         EOF
         kubectl apply -f counter-service-deployment.yaml
 
