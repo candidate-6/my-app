@@ -69,6 +69,31 @@ jobs:
       run: |
         aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
 
+    - name: Deploy K8s resources
+      run: |
+        cat <<EOF > counter-service-deployment.yaml
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: counter-service-deployment
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              app: counter-service
+          template:
+            metadata:
+              labels:
+                app: counter-service
+            spec:
+              containers:
+              - name: counter-service-container
+                image: 424579921836.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/counter-service:latest
+                ports:
+                - containerPort: 443
+        EOF
+        kubectl apply -f counter-service-deployment.yaml
+
     - name: Deploy to EKS
       run: |
         kubectl set image deployment/counter-service-deployment counter-service-container=424579921836.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/counter-service:latest
