@@ -103,15 +103,8 @@ jobs:
               labels:
                 app: counter-service
             spec:
-              affinity:
-                nodeAffinity:
-                  requiredDuringSchedulingIgnoredDuringExecution:
-                    nodeSelectorTerms:
-                    - matchExpressions:
-                      - key: eks.amazonaws.com/nodegroup
-                        operator: In
-                        values:
-                        - "node-group-2-*" # Replace with specific node group patterns if needed
+              nodeSelector:
+                role: app # Match nodes with the custom label "role=app"
               containers:
               - name: counter-service-container
                 image: 424579921836.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/counter-service:latest
